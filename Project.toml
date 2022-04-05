@@ -1,0 +1,13 @@
+name = "HistoricalStormTraceSimulation"
+uuid = "58a4315f-937b-439b-94fb-94f74ae502ca"
+authors = ["Jake Grainger <j.p.grainger2@outlook.com> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
