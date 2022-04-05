@@ -2,7 +2,7 @@ struct StormHistory{S,T}
     summaries::Vector{S}
     traces::Vector{T}
     function StormHistory(summaries::Vector{S},traces::Vector{T}) where {S,T}
-        length(summaries) == length(traces) || throw(ArgumentError("Should be equal number of traces and summaries."))
+        length(summaries) == length(traces) || throw(DimensionMismatch("Should be equal number of traces and summaries."))
         new{S,T}(summaries,traces)
     end
 end
