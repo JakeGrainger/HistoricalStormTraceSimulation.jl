@@ -17,7 +17,7 @@ end
 struct RescaleMaxPreserveMin <: RescaleMethod end
 function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleMaxPreserveMin)
     xmin = minimum(x)
-    rescale = (y-xmin)/maximum(x)
+    rescale = (y-xmin)/(maximum(x)-xmin)
     for i in eachindex(x)
         @inbounds x[i] = (x[i]-xmin)*rescale + xmin
     end
