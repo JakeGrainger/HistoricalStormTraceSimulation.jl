@@ -1,5 +1,8 @@
 module HistoricalStormTraceSimulation
 
-# Write your package code here.
+include("rescalemethods.jl")
+include("tracesampling.jl")
+
+export sanmpletrace, StormHistory, RescaleMaxChangeMin, RescaleMaxPreserveMin, IdentityRescale
 
 end
