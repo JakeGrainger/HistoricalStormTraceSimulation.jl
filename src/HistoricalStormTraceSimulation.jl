@@ -3,6 +3,6 @@ module HistoricalStormTraceSimulation
 include("rescalemethods.jl")
 include("tracesampling.jl")
 
-export sanmpletrace, StormHistory, RescaleMaxChangeMin, RescaleMaxPreserveMin, IdentityRescale
+export sampletrace, StormHistory, RescaleMaxChangeMin, RescaleMaxPreserveMin, IdentityRescale
 
 end
