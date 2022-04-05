@@ -1,3 +1,5 @@
+import HistoricalStormTraceSimulation: rescalesinglevariable!
+
 @testset "rescalemethods" begin
     @testset "IdentityRescale" begin
         a = rand(10); b = copy(a)
