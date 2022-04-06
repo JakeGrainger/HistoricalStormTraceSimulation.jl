@@ -27,7 +27,7 @@ function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
 end
 
 function samplehistoricaltrace(summary,history,sampler::TraceSampler)
-    for i in eachindex(history.summaries,sampler.distance)
+    for i in eachindex(history.summaries,sampler.distance_store)
         sampler.distance_store[i] = sampler.d(summary,history.summaries[i])
     end
     sortperm!(sampler.distance_index,sampler.distance_store,rev=true)
