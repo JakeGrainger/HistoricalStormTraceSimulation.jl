@@ -23,3 +23,7 @@ function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleMaxPreserveMi
     end
     nothing
 end
+
+function rescaletime(time,duration)
+    return (time.-time[1]) .* (duration/(time[end]-time[1]))
+end

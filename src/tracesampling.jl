@@ -1,11 +1,17 @@
-struct StormHistory
+struct StormTrace{T<:AbstractRange{<:Real}}
+    value::Matrix{Float64}
+    time::T
+end
+nvariables(t::StormTrace) = size(t.value,2)+1
+
+struct StormHistory{T}
     summaries::Vector{Vector{Float64}}
-    traces::Vector{Matrix{Float64}}
-    function StormHistory(summaries,traces)
+    traces::Vector{StormTrace{T}}
+    function StormHistory(summaries,traces::Vector{StormTrace{T}}) where {T}
         length(summaries) == length(traces) || throw(DimensionMismatch("Should be equal number of traces and summaries."))
-        all(length(s) == size(t,2) for (s,t) ∈ zip(summaries,traces)) || throw(DimensionMismatch("Each summary should be same length as second dim of corresponding trace."))
-        all(length(s)==length(summaries[1]) for s in summaries) || throw(ArgumentError("summaries should all be the same length."))
-        new(summaries,traces)
+        all(length(s) == nvariables(t) for (s,t) ∈ zip(summaries,traces)) || throw(DimensionMismatch("Trace and summary have different number of variables."))
+        all(length(s) == length(summaries[1]) for s in summaries) || throw(ArgumentError("summaries should all be same length."))
+        new{T}(summaries,traces)
     end
 end
 
@@ -21,10 +27,10 @@ struct TraceSampler{D<:Metric,T}
 end
 TraceSampler(d,samplemethod,n::Int) = TraceSampler(d,samplemethod,Vector{Float64}(undef,n),Vector{Int64}(undef,n))
 
-
 function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
     trace = samplehistoricaltrace(summary,history,sampler)
     adjustedtrace = rescaletrace(trace,summary,rescalemethod)
+    # finaltrace = interpolate()
     return adjustedtrace
 end
 
@@ -39,10 +45,11 @@ function samplehistoricaltrace(summary,history,sampler::TraceSampler)
     return deepcopy(history.traces[traceind])
 end
 
-function rescaletrace(trace,summary,rescalemethod::NTuple{N,RescaleMethod}) where {N}
-    N == size(trace,2) || throw(ArgumentError("Should specify same number of rescale methods as variables."))
-    for i in 1:size(trace,2)
-        rescalesinglevariable!(view(trace,:,i),summary[i],rescalemethod[i])
+function rescaletrace(trace::StormTrace,summary,rescalemethod::NTuple{N,RescaleMethod}) where {N}
+    N == size(trace.value,2) || throw(ArgumentError("Should specify same number of rescale methods as variables."))
+    for i in 1:size(trace.value,2)
+        rescalesinglevariable!(view(trace.value,:,i),summary[i],rescalemethod[i])
     end
-    return trace
+    newtime = rescaletime(trace.time,summary[end])
+    return StormTrace(trace.value,newtime)
 end
