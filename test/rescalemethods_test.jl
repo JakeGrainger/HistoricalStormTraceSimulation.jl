@@ -1,14 +1,14 @@
 import HistoricalStormTraceSimulation: rescalesinglevariable!, IdentityRescale, RescaleMaxChangeMin, RescaleMaxPreserveMin, rescaletime
-
+import Random: randperm
 @testset "rescalemethods" begin
     @testset "IdentityRescale" begin
-        a = unique(rand(10)); b = copy(a)
+        x = randperm(1:20); x_origional = copy(x)
         rescalesinglevariable!(a,rand(),IdentityRescale())
-        @test a == b
+        @test x == x_origional
     end
 
     @testset "RescaleMaxChangeMin" begin
-        x = unique(rand(10)); xmax = rand()+0.1
+        x = randperm(1:20); xmax = rand()+0.1
         x_origional = copy(x)
         rescalesinglevariable!(x,xmax,RescaleMaxChangeMin())
         @test maximum(x) ≈ xmax
@@ -16,7 +16,7 @@ import HistoricalStormTraceSimulation: rescalesinglevariable!, IdentityRescale, 
     end
 
     @testset "RescaleMaxPreserveMin" begin
-        x = unique(rand(10)); xmax = rand()+0.1
+        x = randperm(1:20); xmax = rand()+0.1
         x_origional = copy(x)
         rescalesinglevariable!(x,xmax,RescaleMaxPreserveMin())
         @test maximum(x) ≈ xmax
