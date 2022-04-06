@@ -4,6 +4,7 @@ struct StormHistory
     function StormHistory(summaries,traces)
         length(summaries) == length(traces) || throw(DimensionMismatch("Should be equal number of traces and summaries."))
         all(length(s) == size(t,2) for (s,t) ∈ zip(summaries,traces)) || throw(DimensionMismatch("Each summary should be same length as second dim of corresponding trace."))
+        all(length(s)==length(summaries[1]) for s in summaries) || throw(ArgumentError("summaries should all be the same length."))
         new(summaries,traces)
     end
 end
