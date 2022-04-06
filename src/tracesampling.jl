@@ -32,7 +32,8 @@ function samplehistoricaltrace(summary,history,sampler::TraceSampler)
     end
     sortperm!(sampler.distance_index,sampler.distance_store,rev=true)
     sampled = rand(sampler.samplemethod)
-    traceind = sample.distance_index[sampled]
+    sampled ≤ length(sampler.distance_store) || error("Sampler sampled out of bounds, check sampler provided is appropriate.")
+    traceind = sampler.distance_index[sampled]
     return deepcopy(history.traces[traceind])
 end
 
