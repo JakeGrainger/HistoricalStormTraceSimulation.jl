@@ -3,7 +3,7 @@ import Random: randperm
 @testset "rescalemethods" begin
     @testset "IdentityRescale" begin
         x = randperm(20).*0.1; x_origional = copy(x)
-        rescalesinglevariable!(a,rand(),IdentityRescale())
+        rescalesinglevariable!(x,rand(),IdentityRescale())
         @test x == x_origional
     end
 
