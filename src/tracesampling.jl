@@ -7,17 +7,17 @@ struct StormHistory{S,T}
     end
 end
 
-struct TraceSampler{T,D<:Distance}
+struct TraceSampler{D<:Metric,T}
     d::D
-    distance::Vector{Float64}
-    distance_index::Vector{Int64}
     samplemethod::T # could be 1:50 if we wanted even probs
-    function TraceSampler(distance,distance_index,samplemethod::T) where {T}
-        length(distance) == length(distance_index) || throw(DimensionMismatch("distance and distance_index not the same length."))
-        new{T}(distance,distance_index,samplemethod::T)
+    distance_store::Vector{Float64}
+    distance_index::Vector{Int64}
+    function TraceSampler(d::D,distance_store,distance_index,samplemethod::T) where {D,T}
+        length(distance_store) == length(distance_index) || throw(DimensionMismatch("distance_store and distance_index not the same length."))
+        new{D,T}(d,samplemethod::T,distance_store,distance_index)
     end
 end
-TraceSampler(n,samplemethod) = TraceSampler(Vector{Float64}(undef,n),Vector{Int64}(undef,n),samplemethod)
+TraceSampler(d,n,samplemethod) = TraceSampler(d,samplemethod,Vector{Float64}(undef,n),Vector{Int64}(undef,n))
 
 
 function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
@@ -28,9 +28,9 @@ end
 
 function samplehistoricaltrace(summary,history,sampler::TraceSampler)
     for i in eachindex(history.summaries,sampler.distance)
-        sampler.distance[i] = sampler.d(summary,history.summaries[i])
+        sampler.distance_store[i] = sampler.d(summary,history.summaries[i])
     end
-    sortperm!(sampler.distance_index,distance,rev=true)
+    sortperm!(sampler.distance_index,sampler.distance_store,rev=true)
     sampled = rand(sampler.samplemethod)
     traceind = sample.distance_index[sampled]
     return deepcopy(history.traces[traceind])
