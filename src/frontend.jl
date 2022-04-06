@@ -24,7 +24,7 @@ function sampletraces(new_summaries, historical_summaries, historical_trace_valu
     history = StormHistory(historical_summaries,historical_traces)
     sampler = TraceSampler(summarymetric,samplemethod,length(historical_summaries))
     traces = @showprogress "Sampling historical storms... " [
-        sampledsingletrace(s,history,sampler,rescalemethod) for s ∈ new_summaries
+        samplesingletrace(s,history,sampler,rescalemethod) for s ∈ new_summaries
     ]
     return traces
 end
