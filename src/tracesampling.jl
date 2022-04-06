@@ -17,7 +17,11 @@ struct TraceSampler{T}
     distance::Vector{Float64}
     distance_index::Vector{Int64}
     samplemethod::T # could be 1:50 if we wanted even probs
+    function TraceSampler(distance,distance_index,samplemethod::T) where {T}
+        length(distance) == length(distance_index) || throw(DimensionMismatch("distance and distance_index not the same length."))
+        new{T}(distance,distance_index,samplemethod::T)
 end
+TraceSampler(n,samplemethod) = TraceSampler(Vector{Float64}(undef,n),Vector{Int64}(undef,n),samplemethod)
 
 function samplehistoricaltrace(summary,history,sampler::TraceSampler)
     for i in eachindex(history.summaries,sampler.distance)
