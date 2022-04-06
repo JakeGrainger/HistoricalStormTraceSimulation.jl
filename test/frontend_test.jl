@@ -10,5 +10,5 @@
     rescalemethod = (IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin())
     # tests
     sample = sampletraces(new_summaries, historical_summaries, historical_trace_values, historical_trace_times; samplemethod=samplemethod, rescalemethod=rescalemethod)
-    @test sample isa Vector{StormTraces}
+    @test sample isa Vector{StormTrace}
 end
