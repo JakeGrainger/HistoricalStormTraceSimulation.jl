@@ -1,4 +1,4 @@
-import HistoricalStormTraceSimulation: rescalesinglevariable!
+import HistoricalStormTraceSimulation: rescalesinglevariable!, IdentityRescale, RescaleMaxChangeMin, RescaleMaxPreserveMin
 
 @testset "rescalemethods" begin
     @testset "IdentityRescale" begin
