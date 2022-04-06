@@ -1,8 +1,10 @@
 module HistoricalStormTraceSimulation
 
+using ProgressMeter, Distances
+
 include("rescalemethods.jl")
 include("tracesampling.jl")
 
-export sampletrace, StormHistory, RescaleMaxChangeMin, RescaleMaxPreserveMin, IdentityRescale
+export sampletraces
 
 end

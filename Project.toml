@@ -3,6 +3,10 @@ uuid = "58a4315f-937b-439b-94fb-94f74ae502ca"
 authors = ["Jake Grainger <j.p.grainger2@outlook.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+ProgressMeter = "92933f4c-e287-5a05-a399-4b506db050ca"
+
 [compat]
 julia = "1"
 
