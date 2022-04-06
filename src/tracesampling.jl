@@ -7,7 +7,8 @@ struct StormHistory{S,T}
     end
 end
 
-struct TraceSampler{T}
+struct TraceSampler{T,D<:Distance}
+    d::D
     distance::Vector{Float64}
     distance_index::Vector{Int64}
     samplemethod::T # could be 1:50 if we wanted even probs
@@ -19,7 +20,7 @@ end
 TraceSampler(n,samplemethod) = TraceSampler(Vector{Float64}(undef,n),Vector{Int64}(undef,n),samplemethod)
 
 
-function sampletrace(summary,history::StormHistory,sampler,rescalemethod)
+function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
     trace = samplehistoricaltrace(summary,history,sampler)
     adjustedtrace = rescaletrace(trace,summary,rescalemethod)
     return adjustedtrace
