@@ -12,12 +12,12 @@ struct TraceSampler{D<:Metric,T}
     samplemethod::T # could be 1:50 if we wanted even probs
     distance_store::Vector{Float64}
     distance_index::Vector{Int64}
-    function TraceSampler(d::D,samplemethod::T,distance_store,distance_index) where {D,T}
+    function TraceSampler(d::D,samplemethod::T,distance_store,distance_index) where {D<:Metric,T}
         length(distance_store) == length(distance_index) || throw(DimensionMismatch("distance_store and distance_index not the same length."))
         new{D,T}(d,samplemethod::T,distance_store,distance_index)
     end
 end
-TraceSampler(d,n,samplemethod) = TraceSampler(d,samplemethod,Vector{Float64}(undef,n),Vector{Int64}(undef,n))
+TraceSampler(d,samplemethod,n::Int) = TraceSampler(d,samplemethod,Vector{Float64}(undef,n),Vector{Int64}(undef,n))
 
 
 function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
