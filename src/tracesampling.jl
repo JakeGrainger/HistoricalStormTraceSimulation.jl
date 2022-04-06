@@ -41,7 +41,7 @@ end
 function rescaletrace(trace,summary,rescalemethod::NTuple{N,RescaleMethod}) where {N}
     N == size(trace,2) || throw(ArgumentError("Should specify same number of rescale methods as variables."))
     for i in 1:size(trace,2)
-        rescalesinglevariable!(view(trace,:,i),summary[i],rescalemethod)
+        rescalesinglevariable!(view(trace,:,i),summary[i],rescalemethod[i])
     end
     return trace
 end
