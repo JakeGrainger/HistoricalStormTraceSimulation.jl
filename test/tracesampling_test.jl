@@ -6,5 +6,6 @@ import HistoricalStormTraceSimulation: StormHistory, TraceSampler
 
     @testset "TraceSampler" begin
         @test_throws DimensionMismatch TraceSampler(Euclidean(),1:10,rand(10),rand(9))        
+        @test TraceSampler(Euclidean(),1:50,100) isa TraceSampler
     end
 end
