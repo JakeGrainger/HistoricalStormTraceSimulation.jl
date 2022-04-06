@@ -7,7 +7,7 @@ struct StormHistory{S,T}
     end
 end
 
-function sampletrace(summary,history::StormHistory;samplemethod,rescalemethod)
+function sampletrace(summary,history::StormHistory,samplemethod,rescalemethod)
     trace = samplehistoricaltrace(summary,history,samplemethod)
     adjustedtrace = rescaletrace(trace,summary,rescalemethod)
     return adjustedtrace
