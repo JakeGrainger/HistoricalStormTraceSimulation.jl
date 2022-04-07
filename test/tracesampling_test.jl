@@ -1,5 +1,5 @@
 import HistoricalStormTraceSimulation: StormHistory, 
-    TraceSampler, samplehistoricaltrace, rescaletrace!, StormTrace, nvariables
+    TraceSampler, samplehistoricaltrace, rescaletrace!, StormTrace, nvariables, interpolatetrace
 @testset "tracesampling" begin
     @testset "StormHistory" begin
         @test_throws DimensionMismatch StormHistory([rand(4) for i in 1:3],[StormTrace(rand(10,3),1:10) for i in 1:4]) # throw error if not same number of summaries as traces
@@ -18,6 +18,11 @@ import HistoricalStormTraceSimulation: StormHistory,
         sampler = TraceSampler(Euclidean(),1:50,100)
         trace = samplehistoricaltrace(summary,history,sampler)
         @test trace isa StormTrace
+    end
+
+    @testset "interpolatetrace" begin
+        trace = interpolatetrace(StormTrace(rand(11,2),0:10),0.5)
+        @test trace.time == 0:0.5:10
     end
 
     @testset "samplehistoricaltrace" begin
