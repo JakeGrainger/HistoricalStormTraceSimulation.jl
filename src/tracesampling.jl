@@ -29,9 +29,21 @@ TraceSampler(d,samplemethod,n::Int) = TraceSampler(d,samplemethod,Vector{Float64
 
 function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
     trace = samplehistoricaltrace(summary,history,sampler)
-    adjustedtrace = rescaletrace(trace,summary,rescalemethod)
-    # finaltrace = interpolate()
-    return adjustedtrace
+    adjustedtrace = rescaletrace!(trace,summary,rescalemethod)
+    finaltrace = interpolatetrace(adjustedtrace,step(trace.time))
+    return finaltrace
+end
+
+function interpolatetrace(trace,Δ)
+    newtime = 0:Δ:trace.time[end]
+    newvalue = Matrix{Float64}(undef,length(newtime),size(trace.value,2))
+    for i in 1:size(trace.value,2)
+        sp = CubicSplineInterpolation(trace.time, trace.value[:,i])
+        for j in 1:size(newvalue,1)
+            newvalue[j,i] = sp(newtime[j])
+        end
+    end
+    return StormTrace(newvalue,newtime)
 end
 
 function samplehistoricaltrace(summary,history,sampler::TraceSampler)
@@ -45,7 +57,7 @@ function samplehistoricaltrace(summary,history,sampler::TraceSampler)
     return deepcopy(history.traces[traceind])
 end
 
-function rescaletrace(trace::StormTrace,summary,rescalemethod::NTuple{N,RescaleMethod}) where {N}
+function rescaletrace!(trace::StormTrace,summary,rescalemethod::NTuple{N,RescaleMethod}) where {N}
     N == size(trace.value,2) || throw(ArgumentError("Should specify same number of rescale methods as variables."))
     for i in 1:size(trace.value,2)
         rescalesinglevariable!(view(trace.value,:,i),summary[i],rescalemethod[i])

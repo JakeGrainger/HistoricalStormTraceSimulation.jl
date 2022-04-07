@@ -1,5 +1,5 @@
 import HistoricalStormTraceSimulation: StormHistory, 
-    TraceSampler, samplehistoricaltrace, rescaletrace, StormTrace, nvariables
+    TraceSampler, samplehistoricaltrace, rescaletrace!, StormTrace, nvariables
 @testset "tracesampling" begin
     @testset "StormHistory" begin
         @test_throws DimensionMismatch StormHistory([rand(4) for i in 1:3],[StormTrace(rand(10,3),1:10) for i in 1:4]) # throw error if not same number of summaries as traces
@@ -32,9 +32,9 @@ import HistoricalStormTraceSimulation: StormHistory,
         @test any(trace.time == h.time for h in history.traces)
     end
 
-    @testset "rescaletrace" begin
-        @test_throws MethodError rescaletrace(rand(10,3),rand(3),(IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
-        trace = rescaletrace(StormTrace(rand(10,3),1:10),rand(4),(IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
+    @testset "rescaletrace!" begin
+        @test_throws MethodError rescaletrace!(rand(10,3),rand(3),(IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
+        trace = rescaletrace!(StormTrace(rand(10,3),1:10),rand(4),(IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
         @test nvariables(trace) == 4
     end
 end
