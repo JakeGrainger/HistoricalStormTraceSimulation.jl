@@ -1,5 +1,5 @@
 using HistoricalStormTraceSimulation
-using Test, Distances
+using Test, Distances, DataFrames
 
 @testset "HistoricalStormTraceSimulation.jl" begin
     include("rescalemethods_test.jl")
