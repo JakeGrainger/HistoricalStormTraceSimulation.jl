@@ -1,6 +1,6 @@
 module HistoricalStormTraceSimulation
 
-using ProgressMeter, Distances, Interpolations
+using ProgressMeter, Distances, Interpolations, DataFrames
 
 include("rescalemethods.jl")
 include("tracesampling.jl")
