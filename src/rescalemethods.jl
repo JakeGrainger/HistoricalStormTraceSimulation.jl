@@ -1,7 +1,7 @@
 abstract type RescaleMethod end
 
-struct IdentityRescale <: RescaleMethod end
-function rescalesinglevariable!(x::AbstractVector,y::Real,::IdentityRescale)
+struct RescaleIdentity <: RescaleMethod end
+function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleIdentity)
     nothing
 end
 
@@ -22,6 +22,12 @@ function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleMaxPreserveMi
     for i in eachindex(x)
         @inbounds x[i] = (x[i]-xmin)*rescale + xmin
     end
+    nothing
+end
+
+struct RescaleMean <: RescaleMethod end
+function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleMean)
+    x .+= y-mean(x)
     nothing
 end
 

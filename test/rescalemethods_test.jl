@@ -1,11 +1,11 @@
-import HistoricalStormTraceSimulation: rescalesinglevariable!, IdentityRescale, RescaleMaxChangeMin, RescaleMaxPreserveMin, rescaletime
+import HistoricalStormTraceSimulation: rescalesinglevariable!, rescaletime
 import Random: randperm
 import Random
 Random.seed!(6266) # seed chosen at random
 @testset "rescalemethods" begin
-    @testset "IdentityRescale" begin
+    @testset "RescaleIdentity" begin
         x = randperm(20).*0.1; x_origional = copy(x)
-        rescalesinglevariable!(x,rand(),IdentityRescale())
+        rescalesinglevariable!(x,rand(),RescaleIdentity())
         @test x == x_origional
     end
 
@@ -30,6 +30,15 @@ Random.seed!(6266) # seed chosen at random
             @test argmax(x) == argmax(x_origional)
             @test argmin(x) == argmin(x_origional)
             @test_logs (:warn,"new maximum is less than minimum, this results in incorrect scaling.") rescalesinglevariable!(x,minimum(x)-0.1,RescaleMaxPreserveMin())
+        end
+    end
+    @testset "RescaleMean" begin
+        for _ in 1:10 # test multiple random values
+            x = randperm(20).*0.1; xmean = rand()
+            x_origional = copy(x)
+            rescalesinglevariable!(x,xmean,RescaleMean())
+            @test sum(x)/length(x) ≈ xmean
+            @test argmax(x) == argmax(x_origional)
         end
     end
     computeduration(x) = x[end]-x[1]
