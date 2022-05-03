@@ -7,7 +7,7 @@
         historical_trace_values = [rand(length(t), npars) for t in historical_trace_times]
         samplemethod = 1:40
         historical_summaries = [[[maximum(c) for c in eachcol(v)];t[end]-t[1]] for (v,t) in zip(historical_trace_values,historical_trace_times)]
-        rescalemethod = (IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin())
+        rescalemethod = (RescaleIdentity(),RescaleMaxChangeMin(),RescaleMaxPreserveMin())
         # tests
         historical_traces = StormTrace.(historical_trace_values,historical_trace_times)
         history = StormHistory(historical_summaries,historical_traces)

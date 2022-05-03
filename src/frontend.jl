@@ -11,7 +11,8 @@ Sample new traces given summmaries based on modifications of historical traces.
 - `summarymetric`: A metric for determining closeness of storm summaries (must be subtype of Metric). Default is Euclidean().
 
 # RescaleMethods
-- `IdentityRescale()`: The identity (no rescale).
+- `RescaleIdentity()`: The identity (no rescale).
+- `RescaleMean()`: Rescale the mean to match provided mean.
 - `RescaleMaxChangeMin()`: Rescale the maximum to match provided maximum, using linear scaling and changing the minimum.
 - `RescaleMaxPreserveMin()`: Rescale the maximum to match provided maximum, using linear scaling but preserving the minimum
 """

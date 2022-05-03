@@ -38,8 +38,8 @@ import HistoricalStormTraceSimulation: StormHistory,
     end
 
     @testset "rescaletrace!" begin
-        @test_throws MethodError rescaletrace!(rand(10,3),rand(3),(IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
-        trace = rescaletrace!(StormTrace(rand(10,3),1:10),rand(4),(IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
+        @test_throws MethodError rescaletrace!(rand(10,3),rand(3),(RescaleIdentity(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
+        trace = rescaletrace!(StormTrace(rand(10,3),1:10),rand(4),(RescaleIdentity(),RescaleMaxChangeMin(),RescaleMaxPreserveMin()))
         @test nvariables(trace) == 4
     end
 end
