@@ -9,6 +9,8 @@
     historical_summaries = [[[maximum(c) for c in eachcol(v)];t[end]-t[1]] for (v,t) in zip(historical_trace_values,historical_trace_times)]
     rescalemethod = (IdentityRescale(),RescaleMaxChangeMin(),RescaleMaxPreserveMin())
     # tests
-    sample = sampletraces(new_summaries, historical_summaries, historical_trace_values, historical_trace_times; samplemethod=samplemethod, rescalemethod=rescalemethod)
+    historical_traces = StormTrace.(historical_trace_values,historical_trace_times)
+    history = StormHistory(historical_summaries,historical_traces)
+    sample = sampletraces(new_summaries, history; samplemethod=samplemethod, rescalemethod=rescalemethod)
     @test sample isa Vector{<:StormTrace}
 end
