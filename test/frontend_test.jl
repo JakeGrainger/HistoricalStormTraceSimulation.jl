@@ -36,5 +36,14 @@
             @test length(history.summaries) == 2
             @test length(history.traces) == 2
         end
+        @testset "short" begin
+            event_data = DataFrame(Hs = fill(1.0,3), Tp = fill(2.0,3), dir = fill(3.0,3), D = fill(4.0,3), time = [10,20,40])
+            input_data = DataFrame(Tp = fill(2.0,50), Hs = fill(1.0,50), time = 0:0.2:0.2*49, dir = fill(3.0,50))
+            event_start_end = DataFrame(start = [1,18,37], finish = [11,24,39])
+            simulated_data = DataFrame(Hs = fill(1.0,3), dir = fill(3.0,3), Tp = fill(2.0,3), D = fill(4.0,3))
+            new_summaries, history, summary_names = dataframes2storms(event_data, event_start_end, input_data, simulated_data)
+            @test length(history.summaries) == 2 # one should be too short
+            @test length(history.traces) == 2
+        end
     end
 end

@@ -63,8 +63,8 @@ function dataframes2storms(event_data, event_start_end, input_data, simulated_da
     historical_trace_times = [input_data.time[r[1]]:Δ:input_data.time[r[2]] for r in eachrow(event_start_end)]
     new_summaries = [[c[i] for i in simulated_order] for c in eachrow(Matrix(simulated_data))]
 
-    good_trace_index = [i for i in eachindex(historical_trace_values) if !any(ismissing,historical_trace_values[i])]
-    historical_traces = [StormTrace(identity.(v),t) for (v,t) in zip(historical_trace_values,historical_trace_times) if !any(ismissing,v)]
+    good_trace_index = [i for i in eachindex(historical_trace_values) if !any(ismissing,historical_trace_values[i]) && size(historical_trace_values[i],1)>3]
+    historical_traces = [StormTrace(identity.(historical_trace_values[i]),historical_trace_times[i]) for i in good_trace_index]
     history = StormHistory(historical_summaries[good_trace_index],historical_traces)
     summary_names = event_names[event_order]
     return new_summaries, history, summary_names
