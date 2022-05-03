@@ -7,5 +7,6 @@ include("tracesampling.jl")
 include("frontend.jl")
 
 export sampletraces, dataframes2storms
+export RescaleMaxChangeMin, RescaleMean, RescaleIdentity, RescaleMaxPreserveMin
 
 end
