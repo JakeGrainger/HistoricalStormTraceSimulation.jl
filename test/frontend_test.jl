@@ -20,7 +20,7 @@
             input_data = DataFrame(Tp = fill(2.0,50), Hs = fill(1.0,50), time = 0:0.2:0.2*49, dir = fill(3.0,50))
             event_start_end = DataFrame(start = [1,18,37], finish = [11,24,45])
             simulated_data = DataFrame(Hs = fill(1.0,3), dir = fill(3.0,3), Tp = fill(2.0,3), D = fill(4.0,3))
-            new_summaries, history = dataframes2storms(event_data, event_start_end, input_data, simulated_data)
+            new_summaries, history, summary_names = dataframes2storms(event_data, event_start_end, input_data, simulated_data)
             @test history isa StormHistory
             @test new_summaries isa Vector{Vector{Float64}}
             @test all(s == [1.0,2.0,3.0,4.0] for s in new_summaries)
@@ -32,7 +32,7 @@
             input_data = DataFrame(Tp = fill(2.0,50), Hs = fill(1.0,50), time = 0:0.2:0.2*49, dir = [fill(3.0,25);fill(missing,25)])
             event_start_end = DataFrame(start = [1,18,37], finish = [11,24,45])
             simulated_data = DataFrame(Hs = fill(1.0,3), dir = fill(3.0,3), Tp = fill(2.0,3), D = fill(4.0,3))
-            new_summaries, history = dataframes2storms(event_data, event_start_end, input_data, simulated_data)
+            new_summaries, history, summary_names = dataframes2storms(event_data, event_start_end, input_data, simulated_data)
             @test length(history.summaries) == 2
             @test length(history.traces) == 2
         end

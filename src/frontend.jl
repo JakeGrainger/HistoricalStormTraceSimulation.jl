@@ -42,6 +42,7 @@ Pass outputs to `sampletraces` function.
 # Outputs:
 - `new_summaries` - Vector of summary vectors
 - `history` - `StormHistory` object.
+- `summary_names` - Names of summary variables in order (traces are the same but one less variable (time is seperate)).
 """
 function dataframes2storms(event_data, event_start_end, input_data, simulated_data)
     # needs error handling to check names of input cols are the same.
@@ -65,5 +66,6 @@ function dataframes2storms(event_data, event_start_end, input_data, simulated_da
     good_trace_index = [i for i in eachindex(historical_trace_values) if !any(ismissing,historical_trace_values[i])]
     historical_traces = [StormTrace(identity.(v),t) for (v,t) in zip(historical_trace_values,historical_trace_times) if !any(ismissing,v)]
     history = StormHistory(historical_summaries[good_trace_index],historical_traces)
-    return new_summaries, history
+    summary_names = event_names[event_order]
+    return new_summaries, history, summary_names
 end
