@@ -4,14 +4,14 @@ struct StormTrace{T<:AbstractRange{<:Real}}
 end
 nvariables(t::StormTrace) = size(t.value,2)+1
 
-struct StormHistory{T}
-    summaries::Vector{Vector{Float64}}
-    traces::Vector{StormTrace{T}}
-    function StormHistory(summaries,traces::Vector{StormTrace{T}}) where {T}
+struct StormHistory{T,S}
+    summaries::T
+    traces::S
+    function StormHistory(summaries::AbstractVector{Vector{Float64}},traces::AbstractVector{StormTrace})
         length(summaries) == length(traces) || throw(DimensionMismatch("Should be equal number of traces and summaries."))
         all(length(s) == nvariables(t) for (s,t) ∈ zip(summaries,traces)) || throw(DimensionMismatch("Trace and summary have different number of variables."))
         all(length(s) == length(summaries[1]) for s in summaries) || throw(ArgumentError("summaries should all be same length."))
-        new{T}(summaries,traces)
+        new{T,S}(summaries,traces)
     end
 end
 
