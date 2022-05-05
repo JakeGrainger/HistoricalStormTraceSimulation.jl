@@ -14,6 +14,7 @@ struct StormHistory{T,S}
         new{typeof(summaries),typeof(traces)}(summaries,traces)
     end
 end
+Base.length(s::StormHistory) = Base.length(s.summaries)
 
 struct TraceSampler{D<:Metric,T}
     d::D
