@@ -19,7 +19,7 @@ Sample new traces given summmaries based on modifications of historical traces.
 
 function sampletraces(new_summaries, history::StormHistory; samplemethod=1:50, rescalemethod, summarymetric::Metric=Euclidean())
     all(length(s)==length(new_summaries[1]) for s in new_summaries) || throw(ArgumentError("new_summaries should all be the same length."))
-    sampler = TraceSampler(summarymetric,samplemethod,length(history.summaries))
+    sampler = TraceSampler(summarymetric,samplemethod,length(history))
     traces = @showprogress "Sampling historical storms... " [
         samplesingletrace(s,history,sampler,rescalemethod) for s ∈ new_summaries
     ]
