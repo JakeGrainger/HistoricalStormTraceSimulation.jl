@@ -7,11 +7,11 @@ nvariables(t::StormTrace) = size(t.value,2)+1
 struct StormHistory{T,S}
     summaries::T
     traces::S
-    function StormHistory(summaries::AbstractVector{Vector{Float64}},traces::AbstractVector{StormTrace})
+    function StormHistory(summaries::AbstractVector{Vector{Float64}},traces::AbstractVector{StormTrace{M}}) where {M}
         length(summaries) == length(traces) || throw(DimensionMismatch("Should be equal number of traces and summaries."))
         all(length(s) == nvariables(t) for (s,t) ∈ zip(summaries,traces)) || throw(DimensionMismatch("Trace and summary have different number of variables."))
         all(length(s) == length(summaries[1]) for s in summaries) || throw(ArgumentError("summaries should all be same length."))
-        new{T,S}(summaries,traces)
+        new{typeof(summaries),typeof(traces)}(summaries,traces)
     end
 end
 
