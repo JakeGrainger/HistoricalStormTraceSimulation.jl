@@ -3,7 +3,7 @@ struct StormTrace{T<:AbstractRange{<:Real}}
     time::T
     function StormTrace(value,time)
         size(value,1) == length(time) || throw(DimensionMismatch("time is not the same length as first dimension of value."))
-        new(typeof(time))(value,time)
+        new{typeof(time)}(value,time)
     end
 end
 nvariables(t::StormTrace) = size(t.value,2)+1
