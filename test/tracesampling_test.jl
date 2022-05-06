@@ -23,9 +23,9 @@ import HistoricalStormTraceSimulation: StormHistory,
     @testset "interpolatetrace" begin
         trace = interpolatetrace(StormTrace(rand(11,2),0:10),0.5)
         @test trace.time == 0:0.5:10
-        trace = interpolatetrace(StormTrace(rand(11,2),range(0,10.0000001,length=11)),0.5)
+        trace = interpolatetrace(StormTrace(rand(11,2),range(0,10.000000001,length=11)),0.5)
         @test trace.time == 0:0.5:10
-        trace = interpolatetrace(StormTrace(rand(11,2),range(0,9.99999999,length=11)),0.5)
+        trace = interpolatetrace(StormTrace(rand(11,2),range(0, 9.999999999,length=11)),0.5)
         @test trace.time == 0:0.5:10
     end
 
