@@ -27,6 +27,8 @@ import HistoricalStormTraceSimulation: StormHistory,
         @test trace.time == 0:0.5:10
         trace = interpolatetrace(StormTrace(rand(11,2),range(0, 9.999999999,length=11)),0.5)
         @test trace.time == 0:0.5:10
+        trace = interpolatetrace(StormTrace(rand(11,2),0:10),0.5,CubicSplineInterpolation)
+        @test trace.time == 0:0.5:10
     end
 
     @testset "samplehistoricaltrace" begin
