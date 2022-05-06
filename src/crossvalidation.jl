@@ -22,3 +22,21 @@ function score_method(history::StormHistory; samplemethod=1:50, rescalemethod, s
     end
     return score
 end
+"""
+    find_best_distance(D::Type{<:Metric},x₀,history; kwargs...)
+
+Use optim to find the best distance based on `score_method` scoring.
+
+# Arguments:
+- `D` the type of distance (e.g. WeightedEuclidean). Note this is the type, not an instance!
+- `x₀` initial parameters for the distance to start optimisation.
+- `history` the storm history.
+- `kwargs` additional key word arguments, similar to `score_method`, but not including `summarymetric`, as this is specified by the optimisation.
+"""
+function find_best_distance(D::Type{<:Metric},x₀,history; kwargs...)
+    function best_distance_objective(x)
+        score_method(history; summarymetric = D(x), kwargs...)
+    end
+    res = Optim.optimize(best_distance_objective, x₀)
+    return res
+end
