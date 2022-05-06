@@ -49,7 +49,7 @@ function interpolatetrace(trace,Δ,interpolation_method=LinearInterpolation)
     newtime = 0:Δ:traceend
     newvalue = Matrix{Float64}(undef,length(newtime),size(trace.value,2))
     for i in 1:size(trace.value,2)
-        sp = interpolation_method(trace.time, trace.value[:,i])
+        sp = @views interpolation_method(trace.time, trace.value[:,i])
         for j in 1:size(newvalue,1)
             newvalue[j,i] = sp(newtime[j])
         end
