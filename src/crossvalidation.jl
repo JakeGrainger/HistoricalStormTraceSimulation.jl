@@ -35,7 +35,7 @@ Use optim to find the best distance based on `score_method` scoring.
 """
 function find_best_distance(D::Type{<:Metric},x₀,history; kwargs...)
     function best_distance_objective(x)
-        score_method(history; summarymetric = D(x), kwargs...)
+        sum(score_method(history; summarymetric = D(x), kwargs...))
     end
     res = Optim.optimize(best_distance_objective, x₀)
     return res
