@@ -11,7 +11,7 @@
         # tests
         historical_traces = StormTrace.(historical_trace_values,historical_trace_times)
         history = StormHistory(historical_summaries,historical_traces)
-        sample = sampletraces(new_summaries, history; samplemethod=samplemethod, rescalemethod=rescalemethod)
+        sample = sampletraces(new_summaries, history; samplemethod=samplemethod, rescalemethod=rescalemethod,interpolation_method=CubicSplineInterpolation)
         @test sample isa Vector{<:StormTrace}
     end
     @testset "dataframes2storms" begin
