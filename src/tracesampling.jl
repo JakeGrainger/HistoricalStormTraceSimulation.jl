@@ -44,6 +44,7 @@ function interpolatetrace(trace,Δ)
     traceend = trace.time[end]
     if traceend % Δ ≈ 0 || traceend % Δ ≈ Δ # catch cases of floating point error
         traceend = round(traceend/Δ)*Δ
+        trace = StormTrace(trace.value,range(trace.time[1],traceend,length=length(trace.time))) # replace trace with corrected time
     end
     newtime = 0:Δ:traceend
     newvalue = Matrix{Float64}(undef,length(newtime),size(trace.value,2))
