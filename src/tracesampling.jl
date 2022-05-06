@@ -41,7 +41,11 @@ function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
 end
 
 function interpolatetrace(trace,Δ)
-    newtime = 0:Δ:trace.time[end]
+    traceend = trace.time[end]
+    if traceend % Δ ≈ 0 || traceend % Δ ≈ Δ # catch cases of floating point error
+        traceend = round(traceend/Δ)*Δ
+    end
+    newtime = 0:Δ:traceend
     newvalue = Matrix{Float64}(undef,length(newtime),size(trace.value,2))
     for i in 1:size(trace.value,2)
         sp = CubicSplineInterpolation(trace.time, trace.value[:,i])
