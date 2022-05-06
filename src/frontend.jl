@@ -9,6 +9,7 @@ Sample new traces given summmaries based on modifications of historical traces.
 - `samplemethod`: Method for sampling from closest points. Passing 1:m will sample uniformly from the closest `m` points. Defaults to 1:50.
 - `rescalemethod`: Tuple of methods for rescaling (one for each column of the trace). Should be a subtype of type RescaleMethod.
 - `summarymetric`: A metric for determining closeness of storm summaries (must be subtype of Metric). Default is Euclidean().
+- `interpolation_method`: Method for performing interpolation. `LinearInterpolation` is the default, but `CubicSplineInterpolation` may be preferable in some contexts (though it is much slower).
 
 # RescaleMethods
 - `RescaleIdentity()`: The identity (no rescale).
@@ -17,11 +18,11 @@ Sample new traces given summmaries based on modifications of historical traces.
 - `RescaleMaxPreserveMin()`: Rescale the maximum to match provided maximum, using linear scaling but preserving the minimum
 """
 
-function sampletraces(new_summaries, history::StormHistory; samplemethod=1:50, rescalemethod, summarymetric::Metric=Euclidean())
+function sampletraces(new_summaries, history::StormHistory; samplemethod=1:50, rescalemethod, summarymetric::Metric=Euclidean(),interpolation_method=LinearInterpolation)
     all(length(s)==length(new_summaries[1]) for s in new_summaries) || throw(ArgumentError("new_summaries should all be the same length."))
     sampler = TraceSampler(summarymetric,samplemethod,length(history))
     traces = @showprogress "Sampling historical storms... " [
-        samplesingletrace(s,history,sampler,rescalemethod) for s ∈ new_summaries
+        samplesingletrace(s,history,sampler,rescalemethod,interpolation_method) for s ∈ new_summaries
     ]
     return traces
 end

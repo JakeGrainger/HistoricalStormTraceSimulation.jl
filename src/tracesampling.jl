@@ -33,14 +33,14 @@ struct TraceSampler{D<:Metric,T}
 end
 TraceSampler(d,samplemethod,n::Int) = TraceSampler(d,samplemethod,Vector{Float64}(undef,n),Vector{Int64}(undef,n))
 
-function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod)
+function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod,interpolation_method=LinearInterpolation)
     trace = samplehistoricaltrace(summary,history,sampler)
     adjustedtrace = rescaletrace!(trace,summary,rescalemethod)
-    finaltrace = interpolatetrace(adjustedtrace,step(trace.time))
+    finaltrace = interpolatetrace(adjustedtrace,step(trace.time),interpolation_method)
     return finaltrace
 end
 
-function interpolatetrace(trace,Δ)
+function interpolatetrace(trace,Δ,interpolation_method=LinearInterpolation)
     traceend = trace.time[end]
     if traceend % Δ ≈ 0 || traceend % Δ ≈ Δ # catch cases of floating point error
         traceend = round(traceend/Δ)*Δ
@@ -49,7 +49,7 @@ function interpolatetrace(trace,Δ)
     newtime = 0:Δ:traceend
     newvalue = Matrix{Float64}(undef,length(newtime),size(trace.value,2))
     for i in 1:size(trace.value,2)
-        sp = CubicSplineInterpolation(trace.time, trace.value[:,i])
+        sp = interpolation_method(trace.time, trace.value[:,i])
         for j in 1:size(newvalue,1)
             newvalue[j,i] = sp(newtime[j])
         end
