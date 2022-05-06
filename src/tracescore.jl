@@ -5,7 +5,7 @@ struct MarginalTraceScore{T,S} <: TraceScore
     weights::S
     function MarginalTraceScore(metrics::NTuple{N,Metric},weights=ones(size(metrics)))
         length(metrics) == length(weights) || throw(DimensionMismatch("weights and metrics should be same length."))
-        new{typeof(metrics)}(metrics)
+        new{typeof(metrics),typeof(weights)}(metrics,weights)
     end
 end
 
