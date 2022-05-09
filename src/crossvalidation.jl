@@ -1,7 +1,7 @@
 """
-    score_method(history::StormHistory; samplemethod=1:50, rescalemethod, summarymetric::Metric=Euclidean(), interpolation_method=LinearInterpolation, tracescore::TraceScore)
+    expected_score(history::StormHistory; samplemethod=1:50, rescalemethod, summarymetric::Metric=Euclidean(), interpolation_method=LinearInterpolation, tracescore::TraceScore)
 
-Scores the proposed sampling method by leaving out each trace in turn and predicting it, then comparing to the true trace.
+Compute the expected score.
 
 # Arguments:
 - `history`, `samplemethod`, `rescalemethod`, `summarymetric`, `interpolation_method`: same as `sampletraces`
