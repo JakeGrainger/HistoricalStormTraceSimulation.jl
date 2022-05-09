@@ -20,7 +20,7 @@ function conditional_expected_score(summary,trace,history::StormHistory; sampler
     computedistances!(summary,history,sampler)
     for i in 1:length(history)
         newtrace = simulatesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
-        score += pdf(samplemethod) * tracescore(newtrace,trace)
+        score += pdf(samplemethod,history.summary[i]) * tracescore(newtrace,trace)
     end
     return score
 end
