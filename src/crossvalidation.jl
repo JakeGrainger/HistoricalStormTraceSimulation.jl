@@ -32,7 +32,7 @@ function conditional_expected_score(summary,trace,history::StormHistory; sampler
         newtrace = simulatesinglefixedtrace(sampler.distance_index[i],summary,history,rescalemethod,interpolation_method)
         score += tracescore(newtrace,trace) 
     end
-    return score / length(sampler.samplemethod)
+    return score / length(sampler.samplemethod) # divide by k at the end
 end
 function simulatesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
     trace = deepcopy(history.traces[i])
