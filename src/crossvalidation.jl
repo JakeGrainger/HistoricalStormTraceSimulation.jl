@@ -42,7 +42,7 @@ function simulatesinglefixedtrace(i,summary,history,rescalemethod,interpolation_
 end
 
 """
-    find_best_distance(D::Type{<:Metric},x₀,history; kwargs...)
+    find_best_distance(D::Type{<:Metric},x₀,history; lowerbounds, upperbounds, optim_kwargs=(), kwargs...)
 
 Use optim to find the best distance based on `score_method` scoring.
 
@@ -50,12 +50,18 @@ Use optim to find the best distance based on `score_method` scoring.
 - `D` the type of distance (e.g. WeightedEuclidean). Note this is the type, not an instance!
 - `x₀` initial parameters for the distance to start optimisation.
 - `history` the storm history.
+- `lowerbounds` the lowerbounds for the optimisation, defaults to `fill(-Inf,length(x₀))`.
+- `upperbounds` the upperbounds for the optimisation, defaults to `fill(Inf,length(x₀))`.
 - `optim_kwargs`: Key word arguments to be passed to Optim.
 - `kwargs` additional key word arguments, similar to `score_method`, but not including `summarymetric`, as this is specified by the optimisation.
 """
-function find_best_distance(D::Type{<:Metric},x₀,history; optim_kwargs=(), kwargs...)
+function find_best_distance(D::Type{<:Metric},x₀,history; lowerbounds=fill(-Inf,length(x₀)), upperbounds=fill(Inf,length(x₀)), optim_kwargs=(), kwargs...)
     function best_distance_objective(x)
-        expected_score(history; summarymetric = D(x), kwargs...)
+        if all(lowerbounds[i] < x[i] < upperbounds[i] for i in eachindex(x))
+            return expected_score(history; summarymetric = D(x), kwargs...)
+        else
+            return Inf
+        end
     end
     res = Optim.optimize(best_distance_objective, x₀, optim_kwargs...)
     return res
