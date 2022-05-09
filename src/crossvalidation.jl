@@ -24,7 +24,7 @@ function conditional_expected_score(summary,trace,history::StormHistory, sampler
     end
     return score
 end
-function conditional_expected_score(summary,trace,history::StormHistory, sampler::TraceSampler{D,T},rescalemethod,interpolation_method,tracescore) where {D,T<:UnitRange}
+function conditional_expected_score(summary,trace,history::StormHistory, sampler::TraceSampler{D,T},rescalemethod,interpolation_method,tracescore) where {D<:Metric,T<:UnitRange}
     score = 0.0
     computedistances!(summary,history,sampler)
     sortperm!(sampler.distance_index,sampler.distance_store,rev=true)
