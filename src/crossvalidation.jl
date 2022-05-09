@@ -15,7 +15,7 @@ function expected_score(history::StormHistory; samplemethod=1:50, rescalemethod,
     end
     return score/length(history)
 end
-function conditional_expected_score(summary,trace,history::StormHistory; sampler::TraceSampler,rescalemethod,interpolation_method,tracescore)
+function conditional_expected_score(summary,trace,history::StormHistory, sampler::TraceSampler,rescalemethod,interpolation_method,tracescore)
     score = 0.0
     computedistances!(summary,history,sampler)
     for i in 1:length(history)
@@ -24,7 +24,7 @@ function conditional_expected_score(summary,trace,history::StormHistory; sampler
     end
     return score
 end
-function conditional_expected_score(summary,trace,history::StormHistory; sampler::TraceSampler{D,T},rescalemethod,interpolation_method,tracescore) where {D,T<:UnitRange}
+function conditional_expected_score(summary,trace,history::StormHistory, sampler::TraceSampler{D,T},rescalemethod,interpolation_method,tracescore) where {D,T<:UnitRange}
     score = 0.0
     computedistances!(summary,history,sampler)
     sortperm!(sampler.distance_index,sampler.distance_store,rev=true)
