@@ -58,14 +58,19 @@ function interpolatetrace(trace,Δ,interpolation_method=LinearInterpolation)
 end
 
 function samplehistoricaltrace(summary,history,sampler::TraceSampler)
-    for i in eachindex(history.summaries,sampler.distance_store)
-        sampler.distance_store[i] = sampler.d(summary,history.summaries[i])
-    end
+    computedistances!(summary,history,sampler)
     sortperm!(sampler.distance_index,sampler.distance_store,rev=true)
     sampled = rand(sampler.samplemethod)
     sampled ≤ length(sampler.distance_store) || error("Sampler sampled out of bounds, check sampler provided is appropriate.")
     traceind = sampler.distance_index[sampled]
     return deepcopy(history.traces[traceind])
+end
+
+function computedistances!(summary,history,sampler::TraceSampler)
+    for i in eachindex(history.summaries,sampler.distance_store)
+        sampler.distance_store[i] = sampler.d(summary,history.summaries[i])
+    end
+    nothing
 end
 
 function rescaletrace!(trace::StormTrace,summary,rescalemethod::NTuple{N,RescaleMethod}) where {N}
