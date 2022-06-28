@@ -35,10 +35,13 @@ TraceSampler(d,samplemethod,n::Int) = TraceSampler(d,samplemethod,Vector{Float64
 
 function samplesingletrace(summary,history::StormHistory,sampler,rescalemethod,interpolation_method=LinearInterpolation)
     trace = samplehistoricaltrace(summary,history,sampler)
-    adjustedtrace = rescaletrace!(trace,summary,rescalemethod)
-    finaltrace = interpolatetrace(adjustedtrace,step(trace.time),interpolation_method)
+    adjustedtrace = adjusttracetime(trace, summary)
+    interpolatedtrace = interpolatetrace(adjustedtrace,step(trace.time),interpolation_method)
+    finaltrace = rescaletrace!(interpolatedtrace,summary,rescalemethod)
     return finaltrace
 end
+
+adjusttracetime(trace, summary) = StormTrace(trace.value, rescaletime(trace.time,summary[end]))
 
 function interpolatetrace(trace,Δ,interpolation_method=LinearInterpolation)
     traceend = trace.time[end]
@@ -78,6 +81,5 @@ function rescaletrace!(trace::StormTrace,summary,rescalemethod::NTuple{N,Rescale
     for i in 1:size(trace.value,2)
         rescalesinglevariable!(view(trace.value,:,i),summary[i],rescalemethod[i])
     end
-    newtime = rescaletime(trace.time,summary[end])
-    return StormTrace(trace.value,newtime)
+    return trace
 end
