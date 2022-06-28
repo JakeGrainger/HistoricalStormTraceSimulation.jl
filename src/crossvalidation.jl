@@ -55,9 +55,10 @@ Method to simulate a fixed trace based on rescaling the `i`th historical trace.
 """
 function simulatesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
     trace = deepcopy(history.traces[i])
-    adjustedtrace = rescaletrace!(trace,summary,rescalemethod)
-    adjustedtrace = interpolatetrace(adjustedtrace,step(trace.time),interpolation_method)
-    return adjustedtrace
+    adjustedtrace = adjusttracetime(trace, summary)
+    interpolatedtrace = interpolatetrace(adjustedtrace,step(trace.time),interpolation_method)
+    finaltrace = rescaletrace!(interpolatedtrace,summary,rescalemethod)
+    return finaltrace
 end
 
 """
