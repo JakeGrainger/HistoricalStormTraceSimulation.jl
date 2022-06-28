@@ -4,7 +4,7 @@
 Compute the expected score.
 
 # Arguments:
-- `history`, `samplemethod`, `rescalemethod`, `summarymetric`, `interpolation_method`: same as `sampletraces`
+- `history`, `samplemethod`, `rescalemethod`, `summarymetric`, `interpolation_method`: see `sampletraces`.
 - `tracescore`: Score for comparing traces.
 """
 function expected_score(history::StormHistory; samplemethod=1:50, rescalemethod, summarymetric::Metric=Euclidean(), interpolation_method=LinearInterpolation, tracescore::TraceScore)
@@ -15,6 +15,19 @@ function expected_score(history::StormHistory; samplemethod=1:50, rescalemethod,
     end
     return score/length(history)
 end
+"""
+    conditional_expected_score(summary,trace,history,sampler,rescalemethod,interpolation_method,tracescore)
+
+Compute the conditional expected score of a given historical trace.
+A different method will be used if the trace sampler uses a uniform over the closest `m` points method (i.e. if the sampler has a `UnitRange` for its `samplemethod`).
+
+# Arguments
+- `summary`: The summary of a historical trace.
+- `trace`: The corresponding trace.
+- `sampler`: A `TraceSampler`.
+- `history`, `rescalemethod`, `interpolation_method`: see `sampletraces`
+- `tracescore`: Score for comparing traces.
+"""
 function conditional_expected_score(summary,trace,history::StormHistory, sampler::TraceSampler,rescalemethod,interpolation_method,tracescore)
     score = 0.0
     computedistances!(summary,history,sampler)
@@ -34,6 +47,12 @@ function conditional_expected_score(summary,trace,history::StormHistory, sampler
     end
     return score / length(sampler.samplemethod) # divide by k at the end
 end
+
+"""
+    simulatesinglefixedtrace()
+
+Method to simulate a fixed trace based on rescaling the `i`th historical trace.
+"""
 function simulatesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
     trace = deepcopy(history.traces[i])
     adjustedtrace = rescaletrace!(trace,summary,rescalemethod)
