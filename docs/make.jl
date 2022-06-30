@@ -15,10 +15,11 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Getting Started" => "basics.md"
     ],
 )
 
 deploydocs(;
-    repo="github.com/JakeGrainger/HistoricalStormTraceSimulation.jl",
+    repo="github.com/JakeGrainger/HistoricalStormTraceSimulation.jl.git",
     devbranch="main",
 )
