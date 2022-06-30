@@ -16,6 +16,8 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Getting Started" => "basics.md",
+        "Rescale Methods" => "rescalemethods.md",
+        "Trace Scoring" => "tracescore.md",
         "Index" => "docstrings.md"
     ],
 )
