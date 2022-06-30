@@ -1,6 +1,2 @@
 ```@index
 ```
-
-```@autodocs
-Modules = [HistoricalStormTraceSimulation]
-```
