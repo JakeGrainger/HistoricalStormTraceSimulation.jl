@@ -27,7 +27,7 @@ MarginalTraceScore
 Convenience functions for checking compatibility are also provided:
 
 ```@docs
-checkcompatible
+HistoricalStormTraceSimulation.checkcompatible
 ```
 
 ### Implementing new trace scores
