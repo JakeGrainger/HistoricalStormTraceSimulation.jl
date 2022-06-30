@@ -9,7 +9,7 @@ Trace sampling performs the following steps:
 Use `samplesingletrace` to perform this process for one trace.
 
 ```@docs
-samplesingletrace
+HistoricalStormTraceSimulation.samplesingletrace
 ```
 
 Sometimes, it is useful to fix which trace is chosen in step 1.
