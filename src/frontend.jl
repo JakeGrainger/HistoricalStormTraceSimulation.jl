@@ -42,7 +42,7 @@ Pass outputs to `sampletraces` function.
 - `simulated_data` - DataFrame containing simulated storm summaries.
 
 # Outputs:
-- `new_summaries` - Vector of summary vectors
+- `new_summaries` - Vector of summary vectors.
 - `history` - `StormHistory` object.
 - `summary_names` - Names of summary variables in order (traces are the same but one less variable (time is seperate)).
 """
