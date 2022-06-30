@@ -20,9 +20,6 @@ is the implementation for `RescaleMaxChangeMin`.
 
 The `rescaletrace!` function will call `rescalesinglevariable!` on each variable in a trace in turn, it takes a `Tuple` of `RescaleMethods` which allows for different rescales for different variables.
 
-```@docs
-rescaletrace!
-```
 
 ## Available methods
 

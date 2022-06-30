@@ -1,4 +1,19 @@
-# Trace scoring
+# Choosing summary metrics
+
+The choice of distance measure in the storm summary space is not always obvious.
+One way to choose is to pick some parametric distance (e.g. weighted Euclidean distance) and then choose the parameters by try to optimise for the performance of the simulated traces.
+
+If we have a score for the similarity of two traces, we can try to minimise the expected score of the simulated traces against the true historical traces.
+
+To do this, use
+
+```@docs
+find_best_distance
+expected_score
+conditional_expected_score
+```
+
+## Trace scoring
 
 Trace scores can be specified as a subtype of `TraceScore`.
 A functor should then be defined taking in two traces, which returns a measure of similarity between the two, with 0 being identical.
@@ -9,7 +24,13 @@ Provided is `MarginalTraceScore` which allows the user to define weighted sums o
 MarginalTraceScore
 ```
 
-## Implementing new methods
+Convenience functions for checking compatibility are also provided:
+
+```@docs
+checkcompatible
+```
+
+### Implementing new trace scores
 
 New methods can be implemented by analogy to the implementation for `MarginalTraceScore`:
 
