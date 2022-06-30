@@ -3,8 +3,8 @@
 ## Installation
 
 The package can be installed from the repl using
-```@repl
-] add https://github.com/JakeGrainger/HistoricalStormTraceSimulation.jl
+```julia-repl
+(v1.7) pkg> add https://github.com/JakeGrainger/HistoricalStormTraceSimulation.jl
 ```
 
 There are two main interface functions which should be used:
