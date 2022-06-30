@@ -16,7 +16,7 @@ Sometimes, it is useful to fix which trace is chosen in step 1.
 Use `samplesinglefixedtrace` to do this.
 
 ```@docs
-samplesinglefixedtrace
+HistoricalStormTraceSimulation.samplesinglefixedtrace
 ```
 
 ## Sampling from the historical traces
@@ -24,7 +24,7 @@ samplesinglefixedtrace
 The sampling depends on the chosen distribution and the chosen distance used to measure the similarity between summaries.
 
 ```@docs
-samplehistoricaltrace
+HistoricalStormTraceSimulation.samplehistoricaltrace
 ```
 
 ### Trace samplers
@@ -32,8 +32,8 @@ samplehistoricaltrace
 The method for trace sampling is specified by a `TraceSampler`.
 
 ```@docs
-TraceSampler
-computedistances!
+HistoricalStormTraceSimulation.TraceSampler
+HistoricalStormTraceSimulation.computedistances!
 ```
 
 ## Rescaling time
@@ -41,8 +41,8 @@ computedistances!
 Time rescaling of a trace can be done with `adjusttracetime`, which in turn calls `rescaletime` and then repacks as a StormTrace.
 
 ```@docs
-adjusttracetime
-rescaletime
+HistoricalStormTraceSimulation.adjusttracetime
+HistoricalStormTraceSimulation.rescaletime
 ```
 
 ## Interpolating the trace
@@ -50,7 +50,7 @@ rescaletime
 Interpolation is performed with
 
 ```@docs
-`interpolatetrace`
+HistoricalStormTraceSimulation.interpolatetrace
 ```
 
 ##  Rescaling the trace
@@ -58,7 +58,7 @@ Interpolation is performed with
 Trace rescaling is performed by
 
 ```@docs
-rescaletrace!
+HistoricalStormTraceSimulation.rescaletrace!
 ```
 
 See [Rescale methods](@ref) for details of the available rescale methods.
