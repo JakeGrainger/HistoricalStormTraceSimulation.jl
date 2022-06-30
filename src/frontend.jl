@@ -1,7 +1,7 @@
 """
     sampletraces(new_summaries, historical_summaries, historical_traces; samplemethod=1:50, rescalemethod)
 
-Sample new traces given summmaries based on modifications of historical traces.
+Sample new traces given summaries based on modifications of historical traces.
 
 # Arguments
 - `new_summaries`: Vector summaries for which we generate a trace.
@@ -37,14 +37,14 @@ Pass outputs to `sampletraces` function.
 
 # Arguments:
 - `event_data` - DataFrame containing summaries of historical storms.
-- `event_start_end` - DataFrame containing start and end indicies of events in `input_data`.
+- `event_start_end` - DataFrame containing start and end indices of events in `input_data`.
 - `input_data` - DataFrame containing historical time series.
 - `simulated_data` - DataFrame containing simulated storm summaries.
 
 # Outputs:
 - `new_summaries` - Vector of summary vectors.
 - `history` - `StormHistory` object.
-- `summary_names` - Names of summary variables in order (traces are the same but one less variable (time is seperate)).
+- `summary_names` - Names of summary variables in order (traces are the same but one less variable (time is separate)).
 """
 function dataframes2storms(event_data, event_start_end, input_data, simulated_data)
     # needs error handling to check names of input cols are the same.
