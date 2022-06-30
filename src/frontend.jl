@@ -47,6 +47,9 @@ Pass outputs to `sampletraces` function.
 """
 function dataframes2storms(event_data, event_start_end, input_data, simulated_data)
     # needs error handling to check names of input cols are the same.
+    
+    all(r[1] < r[2] for r in eachrow(event_start_end)) || throw(ArgumentError("event_start_end has end times before start times. Should be first col start index, second col end index."))
+    all(r[1] isa Int && r[2] isa Int for r in eachrow(event_start_end)) || throw(ArgumentError("event_start_end is not integer valued. Should be an index, not the actual time."))
 
     event_names = names(event_data)
     simulated_names = names(simulated_data)
