@@ -1,7 +1,7 @@
 # Rescale methods
 
 Rescale methods define ways of rescaling a trace to match a summary.
-They are defined to be subtypes of `RescaleMethod`, e.g.
+They are defined to be subtypes of `RescaleMethod`.
 
 The rescale method itself is defined by extending `rescalesinglevariable!` for the new type. For example:
 
