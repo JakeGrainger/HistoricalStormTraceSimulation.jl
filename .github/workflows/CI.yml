@@ -55,3 +55,4 @@ jobs:
             using HistoricalStormTraceSimulation
             DocMeta.setdocmeta!(HistoricalStormTraceSimulation, :DocTestSetup, :(using HistoricalStormTraceSimulation); recursive=true)
             doctest(HistoricalStormTraceSimulation)'
+      - run: julia --project=docs/ docs/make.jl
