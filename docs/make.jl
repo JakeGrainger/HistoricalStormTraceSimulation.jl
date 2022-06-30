@@ -16,6 +16,8 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Getting Started" => "basics.md",
+        "Internal types" => "types.md"
+        "Trace Sampling" => "sampling.md",
         "Rescale Methods" => "rescalemethods.md",
         "Trace Scoring" => "tracescore.md",
         "Index" => "docstrings.md"
