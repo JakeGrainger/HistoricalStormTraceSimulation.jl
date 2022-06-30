@@ -32,7 +32,7 @@ function conditional_expected_score(summary,trace,history::StormHistory, sampler
     score = 0.0
     computedistances!(summary,history,sampler)
     for i in 1:length(history)
-        newtrace = simulatesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
+        newtrace = samplesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
         score += pdf(samplemethod,sampler.distance_store[i]) * tracescore(newtrace,trace)
     end
     return score
@@ -42,18 +42,18 @@ function conditional_expected_score(summary,trace,history::StormHistory, sampler
     computedistances!(summary,history,sampler)
     sortperm!(sampler.distance_index,sampler.distance_store,rev=true)
     for i in sampler.samplemethod
-        newtrace = simulatesinglefixedtrace(sampler.distance_index[i],summary,history,rescalemethod,interpolation_method)
+        newtrace = samplesinglefixedtrace(sampler.distance_index[i],summary,history,rescalemethod,interpolation_method)
         score += tracescore(newtrace,trace) 
     end
     return score / length(sampler.samplemethod) # divide by k at the end
 end
 
 """
-    simulatesinglefixedtrace()
+    samplesinglefixedtrace()
 
 Method to simulate a fixed trace based on rescaling the `i`th historical trace.
 """
-function simulatesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
+function samplesinglefixedtrace(i,summary,history,rescalemethod,interpolation_method)
     trace = deepcopy(history.traces[i])
     adjustedtrace = adjusttracetime(trace, summary)
     interpolatedtrace = interpolatetrace(adjustedtrace,step(trace.time),interpolation_method)
