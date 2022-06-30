@@ -17,7 +17,6 @@ Sample new traces given summaries based on modifications of historical traces.
 - `RescaleMaxChangeMin()`: Rescale the maximum to match provided maximum, using linear scaling and changing the minimum.
 - `RescaleMaxPreserveMin()`: Rescale the maximum to match provided maximum, using linear scaling but preserving the minimum
 """
-
 function sampletraces(new_summaries, history::StormHistory; samplemethod=1:50, rescalemethod, summarymetric::Metric=Euclidean(),interpolation_method=LinearInterpolation)
     all(length(s)==length(new_summaries[1]) for s in new_summaries) || throw(ArgumentError("new_summaries should all be the same length."))
     sampler = TraceSampler(summarymetric,samplemethod,length(history))
