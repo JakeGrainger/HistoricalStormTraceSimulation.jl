@@ -19,7 +19,7 @@ makedocs(;
         "Internal types" => "types.md",
         "Trace Sampling" => "sampling.md",
         "Rescale Methods" => "rescalemethods.md",
-        "Trace Scoring" => "tracescore.md",
+        "Choosing Summary Metrics" => "tracescore.md",
         "Index" => "docstrings.md"
     ],
 )

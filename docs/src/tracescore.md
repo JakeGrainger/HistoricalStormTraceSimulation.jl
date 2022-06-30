@@ -1,4 +1,4 @@
-# Choosing summary metrics
+# Choosing Summary Metrics
 
 The choice of distance measure in the storm summary space is not always obvious.
 One way to choose is to pick some parametric distance (e.g. weighted Euclidean distance) and then choose the parameters by try to optimise for the performance of the simulated traces.
@@ -13,7 +13,7 @@ expected_score
 conditional_expected_score
 ```
 
-## Trace scoring
+## Trace Scoring
 
 Trace scores can be specified as a subtype of `TraceScore`.
 A functor should then be defined taking in two traces, which returns a measure of similarity between the two, with 0 being identical.

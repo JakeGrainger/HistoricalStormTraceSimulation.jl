@@ -1,9 +1,8 @@
-# Basic usage
+# Getting Started
 
-The *HistoricalStormTraceSimulation.jl* package is designed to generate storm traces based on historical storms to match simulated storm characteristics.
 There are two main interface functions which should be used:
 
-## Sample traces
+## Sample Traces
 
 ```@docs
 sampletraces
@@ -11,7 +10,7 @@ sampletraces
 
 This is the main function used to generate traces from historical storms.
 
-## Converting data to internal types
+## Converting Data to Internal Types
 
 This package uses its own types to conveniently represent the concepts it deals with. In particular, types for representing storm traces and summaries.
 Data of this kind usually comes from outputs of other software, which usually is in the form of named data frames. The `dataframes2storms` function converts such data frames to the correct format for the package.

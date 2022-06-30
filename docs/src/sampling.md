@@ -1,4 +1,4 @@
-# Trace sampling
+# Trace Sampling
 
 Trace sampling performs the following steps:
 1) Draw a trace from the historical traces conditional on the summary.

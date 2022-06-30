@@ -1,4 +1,4 @@
-# Rescale methods
+# Rescale Methods
 
 Rescale methods define ways of rescaling a trace to match a summary.
 They are defined to be subtypes of `RescaleMethod`.
@@ -21,7 +21,7 @@ is the implementation for `RescaleMaxChangeMin`.
 The `rescaletrace!` function will call `rescalesinglevariable!` on each variable in a trace in turn, it takes a `Tuple` of `RescaleMethods` which allows for different rescales for different variables.
 
 
-## Available methods
+## Available Methods
 
 ```@docs
 RescaleIdentity
