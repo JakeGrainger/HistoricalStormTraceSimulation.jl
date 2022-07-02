@@ -1,7 +1,7 @@
 name = "HistoricalStormTraceSimulation"
 uuid = "58a4315f-937b-439b-94fb-94f74ae502ca"
 authors = ["Jake Grainger <j.p.grainger2@outlook.com> and contributors"]
-version = "0.1.1"
+version = "0.2"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
