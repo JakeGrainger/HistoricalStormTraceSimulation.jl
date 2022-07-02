@@ -1,4 +1,4 @@
-import HistoricalStormTraceSimulation: rescalesinglevariable!, rescaletime
+import HistoricalStormTraceSimulation: rescalesinglevariable!, rescaletime, mean
 import Random: randperm
 import Random
 Random.seed!(6266) # seed chosen at random
@@ -10,7 +10,7 @@ Random.seed!(6266) # seed chosen at random
     end
 
     @testset "RescaleMaxChangeMin" begin
-        for _ in 1:10 # test multiple random values
+        for _ in 1:5 # test multiple random values
             x = randperm(20).*0.1; xmax = minimum(x)+rand()
             x_origional = copy(x)
             rescalesinglevariable!(x,xmax,RescaleMaxChangeMin())
@@ -20,7 +20,7 @@ Random.seed!(6266) # seed chosen at random
     end
 
     @testset "RescaleMaxPreserveMin" begin
-        for _ in 1:10  # test multiple random values
+        for _ in 1:5  # test multiple random values
             x = randperm(20).*0.1; xmax = minimum(x)+rand()
             x_origional = copy(x)
             rescalesinglevariable!(x,xmax,RescaleMaxPreserveMin())
@@ -33,12 +33,20 @@ Random.seed!(6266) # seed chosen at random
         end
     end
     @testset "RescaleMean" begin
-        for _ in 1:10 # test multiple random values
+        for _ in 1:5 # test multiple random values
             x = randperm(20).*0.1; xmean = rand()
             x_origional = copy(x)
             rescalesinglevariable!(x,xmean,RescaleMean())
-            @test sum(x)/length(x) ≈ xmean
+            @test mean(x) ≈ xmean
             @test argmax(x) == argmax(x_origional)
+        end
+    end
+    @testset "RescaleMeanCircularDeg" begin
+        for _ in 1:5 # test multiple random values
+            x = rand(20).*360; xmean = 360rand()
+            x_origional = copy(x)
+            rescalesinglevariable!(x,xmean,RescaleMeanCircularDeg())
+            @test mod(rad2deg(angle( mean(exp(1im*deg2rad(xi)) for xi in x) )), 360) ≈ mod(xmean,360)
         end
     end
     computeduration(x) = x[end]-x[1]

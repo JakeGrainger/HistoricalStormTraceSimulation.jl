@@ -84,7 +84,7 @@ where ``\\overline{y_j} = \\arg\\left(\\frac{1}{|T_y|} \\sum_{t\\in T_y}\\exp\\{
 """
 struct RescaleMeanCircularDeg <: RescaleMethod end
 function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleMeanCircularDeg)
-    x_cir_mean = rad2deg(angle(mean(exp(1im*deg2rad(x)))))
+    x_cir_mean = rad2deg(angle(mean(exp(1im*deg2rad(xi)) for xi in x)))
     x .+= y-x_cir_mean
     nothing
 end
