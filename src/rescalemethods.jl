@@ -71,6 +71,24 @@ function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleMean)
     nothing
 end
 
+""" 
+    RescaleMeanCircularDeg()
+
+Rescale the angular mean assuming data is in degrees.
+
+Given a trace variable series ``y_j``, and summary value ``x_j``, the new trace 
+
+``\\tilde y_j(t) = y_j(t) - \\overline{y_j} + x_j``
+
+where ``\\overline{y_j} = \\arg\\left(\\frac{1}{|T_y|} \\sum_{t\\in T_y}\\exp\\{i y_j(t)\\}\\right)``.
+"""
+struct RescaleMeanCircularDeg <: RescaleMethod end
+function rescalesinglevariable!(x::AbstractVector,y::Real,::RescaleMeanCircularDeg)
+    x_cir_mean = rad2deg(angle(mean(exp(1im*deg2rad(x)))))
+    x .+= y-x_cir_mean
+    nothing
+end
+
 """
     rescaletime(time,duration)
 
