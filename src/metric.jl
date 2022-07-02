@@ -36,8 +36,10 @@ Distances.eval_end(::WeightedPeriodicEuclidean, s) = sqrt(s)
 
 """
     SinglePeriodicEuclidean(p)
+
 Create a weighted Euclidean metric on a rectangular periodic domain where all dimensions have the same period.
-Based on the `PeriodicEuclidean` from `Distances.jl`.
+
+Based on the `PeriodicEuclidean` from `Distances.jl`. The provided period `p` should be scalar.
 """
 struct SinglePeriodicEuclidean{W} <: Distances.UnionMetric
     period::W

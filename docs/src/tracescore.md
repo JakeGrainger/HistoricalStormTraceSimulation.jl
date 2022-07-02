@@ -55,3 +55,10 @@ function (mscore::MarginalTraceScore)(t1::StormTrace,t2::StormTrace)
 end
 ```
 
+### Periodic trace scores
+
+If one of the marginal traces should be periodic, use the following metric as opposed to `PeriodicEuclidean`, as that will only work for arrays of a fixed size.
+
+```@docs
+SinglePeriodicEuclidean
+```
