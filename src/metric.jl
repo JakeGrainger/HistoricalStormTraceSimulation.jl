@@ -1,5 +1,5 @@
 """
-    WeightedPeriodicEuclidean(p,W)
+    WeightedPeriodicEuclidean(p,w)
 Create a weighted Euclidean metric on a rectangular periodic domain (i.e., a torus or
 a cylinder). Periods per dimension are contained in the vector `p`, and weights in `w`:
 ```math
