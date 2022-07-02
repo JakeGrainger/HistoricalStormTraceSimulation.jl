@@ -5,6 +5,7 @@ a cylinder). Periods per dimension are contained in the vector `p`, and weights 
 ```math
 \\sqrt{\\sum_i w_i*(\\min\\mod(|x_i - y_i|, p_i), p_i - \\mod(|x_i - y_i|, p_i))^2}.
 ```
+Based on the `PeriodicEuclidean` from `Distances.jl`.
 """
 struct WeightedPeriodicEuclidean{W} <: Distances.UnionMetric
     periods_weights::W
