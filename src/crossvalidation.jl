@@ -67,7 +67,7 @@ end
 Use optim to find the best distance based on `score_method` scoring.
 
 # Arguments:
-- `D` the type of distance (e.g. WeightedEuclidean). Note this is the type, not an instance!
+- `D` the type of distance (e.g. WeightedEuclidean). Note this is the constructor for the type, not an instance!
 - `x₀` initial parameters for the distance to start optimisation.
 - `history` the storm history.
 - `lowerbounds` the lower bounds for the optimisation, defaults to `fill(-Inf,length(x₀))`.
@@ -75,7 +75,7 @@ Use optim to find the best distance based on `score_method` scoring.
 - `optim_kwargs`: Key word arguments to be passed to Optim.
 - `kwargs` additional key word arguments, similar to `score_method`, but not including `summarymetric`, as this is specified by the optimisation.
 """
-function find_best_distance(D::Type{<:Metric},x₀,history; lowerbounds=fill(-Inf,length(x₀)), upperbounds=fill(Inf,length(x₀)), optim_kwargs=(), kwargs...)
+function find_best_distance(D,x₀,history; lowerbounds=fill(-Inf,length(x₀)), upperbounds=fill(Inf,length(x₀)), optim_kwargs=(), kwargs...)
     function best_distance_objective(x)
         if all(lowerbounds[i] < x[i] < upperbounds[i] for i in eachindex(x))
             return expected_score(history; summarymetric = D(x), kwargs...)
