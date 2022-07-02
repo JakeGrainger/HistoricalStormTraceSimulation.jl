@@ -74,6 +74,24 @@ Use optim to find the best distance based on `score_method` scoring.
 - `upperbounds` the upper bounds for the optimisation, defaults to `fill(Inf,length(x₀))`.
 - `optim_kwargs`: Key word arguments to be passed to Optim.
 - `kwargs` additional key word arguments, similar to `score_method`, but not including `summarymetric`, as this is specified by the optimisation.
+
+# Note:
+
+To use `WeightedPeriodicEuclidean`, you first need to select the periods `p`, and then create a constructor to fix these, e.g.
+
+```julia-repl
+julia> myperiods = [Inf,Inf,360.0]
+3-element Vector{Float64}:
+  Inf
+  Inf
+ 360.0
+
+julia> myperiodicdistance(w) = WeightedPeriodicEuclidean(myperiods,w)
+myperiodicdistance (generic function with 1 method)
+```
+
+Then pass `myperiodicdistance` as the argument `D` to `find_best_distance`.
+
 """
 function find_best_distance(D,x₀,history; lowerbounds=fill(-Inf,length(x₀)), upperbounds=fill(Inf,length(x₀)), optim_kwargs=(), kwargs...)
     function best_distance_objective(x)
