@@ -6,9 +6,9 @@ Sample new traces given summaries based on modifications of historical traces.
 # Arguments
 - `new_summaries`: Vector of summaries to generate traces for.
 - `history`: Storm history information of type `StormHistory`. Best constructed using `dataframes2storms` function.
-- `samplemethod`: Method for sampling from closest points. Passing 1:m will sample uniformly from the closest `m` points. Defaults to 1:50. Could also be a `Distribution`. Note that if a `Distribution` is used, then it should be discrete, and should be defined on `1:n` where `n` is the number of historical storms.
+- `samplemethod`: Method for sampling from closest points. Passing 1:m will sample uniformly from the closest `m` points. Defaults to `1:50`. Could also be a `Distribution`. Note that if a `Distribution` is used, then it should be discrete, and should be defined on `1:n` where `n` is the number of historical storms.
 - `rescalemethod`: Tuple of methods for rescaling (one for each column of the trace). Should be a subtype of type RescaleMethod.
-- `summarymetric`: A metric for determining closeness of storm summaries (must be subtype of Metric). Default is Euclidean().
+- `summarymetric`: A metric for determining closeness of storm summaries (must be subtype of Metric). Default is `Euclidean()`. Note care should be taken when dealing with directions, in this case, use `PeriodicEuclidean` or `WeightedPeriodicEuclidean` with the appropriate period choices.
 - `interpolation_method`: Method for performing interpolation. `LinearInterpolation` is the default, but `CubicSplineInterpolation` may be preferable in some contexts (though it is much slower).
 
 # RescaleMethods

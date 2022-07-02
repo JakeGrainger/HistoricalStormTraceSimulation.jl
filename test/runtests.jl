@@ -5,4 +5,5 @@ using Test, Distances, DataFrames
     include("rescalemethods_test.jl")
     include("tracesampling_test.jl")
     include("frontend_test.jl")
+    include("metric_test.jl")
 end

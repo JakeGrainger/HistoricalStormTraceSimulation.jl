@@ -16,6 +16,11 @@ sampletraces
 ```
 
 This is the main function used to generate traces from historical storms.
+This package provides an additional metric for periodic Weighted Euclidean distance:
+
+```@docs
+WeightedPeriodicEuclidean
+```
 
 ## Converting Data to Internal Types
 
