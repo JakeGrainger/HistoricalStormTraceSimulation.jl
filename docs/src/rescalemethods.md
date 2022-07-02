@@ -28,4 +28,5 @@ RescaleIdentity
 RescaleMaxChangeMin
 RescaleMaxPreserveMin
 RescaleMean
+RescaleMeanCircularDeg
 ```
