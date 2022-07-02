@@ -15,6 +15,6 @@ export RescaleMaxChangeMin, RescaleMean, RescaleMeanCircularDeg, RescaleIdentity
 export expected_score, conditional_expected_score, find_best_distance, MarginalTraceScore
 export StormTrace, StormHistory, nvariables
 export LinearInterpolation, CubicSplineInterpolation # reexported
-export WeightedPeriodicEuclidean
+export WeightedPeriodicEuclidean, SinglePeriodicEuclidean
 
 end

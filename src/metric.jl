@@ -32,3 +32,36 @@ oneunittuple(::Type{A}) where {A} = oneunit(A)
     abs2(s3) * p[2]
 end
 Distances.eval_end(::WeightedPeriodicEuclidean, s) = sqrt(s)
+
+
+"""
+    SinglePeriodicEuclidean(p)
+Create a weighted Euclidean metric on a rectangular periodic domain where all dimensions have the same period.
+Based on the `PeriodicEuclidean` from `Distances.jl`.
+"""
+struct SinglePeriodicEuclidean{W} <: Distances.UnionMetric
+    period::W
+end
+
+struct LazySinglePeriod{T} <: AbstractVector{T}
+    period::T
+    n::Int
+end
+Base.size(l::LazySinglePeriod) = (l.n,)
+Base.@propagate_inbounds function Base.getindex(l::LazySinglePeriod, i)
+    @boundscheck checkbounds(l,i)
+    return l.period
+end
+
+@inline (dist::SinglePeriodicEuclidean)(a, b) = Distances._evaluate(dist, a, b, LazySinglePeriod(dist.period,length(a)))
+
+Distances._eval_start(d::SinglePeriodicEuclidean{W}, ::Type{Ta}, ::Type{Tb}) where {W,Ta,Tb} =
+    zero(typeof(Distances.eval_op(d, oneunit(Ta), oneunit(Tb), oneunit(W) )))
+
+@inline function Distances.eval_op(::SinglePeriodicEuclidean, ai, bi, p)
+    s1 = abs(ai - bi)
+    s2 = mod(s1, p)
+    s3 = min(s2, p - s2)
+    abs2(s3)
+end
+Distances.eval_end(::SinglePeriodicEuclidean, s) = sqrt(s)

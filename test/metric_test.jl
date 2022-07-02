@@ -1,5 +1,4 @@
 ## copied from the tests of Distances.jl
-
 function test_metricity(dist, x, y, z)
     @testset "Test metricity of $(typeof(dist))" begin
         @test dist(x, y) == evaluate(dist, x, y)
@@ -40,6 +39,15 @@ function test_metricity(dist, x, y, z)
 end
 
 @testset "metric.jl" begin
-    test_metricity(WeightedPeriodicEuclidean([0.5,0.5,Inf],[1,2,1]),[1.0,2.3,4.0],[5.0,2.0,1.0],[5.0,2.0,7.3])
-    @test_throws DimensionMismatch WeightedPeriodicEuclidean([0.5,0.5,Inf],[1,2])
+    @testset "WeightedPeriodicEuclidean" begin
+        test_metricity(WeightedPeriodicEuclidean([0.5,0.5,Inf],[1,2,1]),[1.0,2.3,4.0],[5.0,2.3,1.0],[5.0,2.0,7.3])
+        @test_throws DimensionMismatch WeightedPeriodicEuclidean([0.5,0.5,Inf],[1,2])
+    end
+    @testset "SinglePeriodicEuclidean" begin
+        test_metricity(SinglePeriodicEuclidean(360),[1.0,2.3,4.0],[5.0,2.3,1.0],[5.0,2.0,7.3])
+        l = SinglePeriodicEuclidean(360)
+        @test l(ones(5),ones(5)) isa Float64 # test that you can use the same metric with any size array
+        @test l(ones(3),ones(3)) isa Float64
+        @test l([5.0,2.3,1.0],[5.0,2.0,7.3]) == PeriodicEuclidean(fill(360,3))([5.0,2.3,1.0],[5.0,2.0,7.3])
+    end
 end
