@@ -99,5 +99,5 @@ Rescale the time to match the duration ``(d)`` and start at 0. The formula is, `
 Then the time vector of ``\\tilde y`` is ``T_{\\tilde{y}} = \\{\\tilde{t}_t \\mid t \\in T_y\\}``.
 """
 function rescaletime(time,duration)
-    return (time.-time[1]) .* (duration/(time[end]-time[1]))
+    return range(0,duration,length(time)) # (time.-time[1]) .* (duration/(time[end]-time[1])) this is more stable
 end
