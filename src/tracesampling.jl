@@ -120,7 +120,6 @@ Interpolate a `trace` to a new resolution `Δ`.
 - `interpolation_method`: see docstring for `sampletraces`.
 """
 function interpolatetrace(trace,Δ,interpolation_method=LinearInterpolation)
-    traceend = trace.time[end]-trace.time[1] # ensure starting at 0
     if traceend % Δ ≈ 0 || traceend % Δ ≈ Δ # catch cases of floating point error
         traceend = round(traceend/Δ)*Δ
         trace = StormTrace(trace.value,range(0.0,traceend,length=length(trace.time))) # replace trace with corrected time
