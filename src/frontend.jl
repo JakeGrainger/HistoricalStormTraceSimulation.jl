@@ -64,8 +64,10 @@ function dataframes2storms(event_data, event_start_end, input_data, simulated_da
     historical_summaries = [[c[i] for i in event_order] for c in eachrow(Matrix(event_data))]
     historical_trace_values = [reduce(hcat,input_data[r[1]:r[2],i] for i in input_order) for r in eachrow(event_start_end)]
     Δ = input_data.time[2]-input_data.time[1]
-    historical_trace_times = [input_data.time[r[1]]:Δ:input_data.time[r[2]] for r in eachrow(event_start_end)]
+    historical_trace_times = [(r[1]:r[2]) .* Δ for r in eachrow(event_start_end)] # note these are not the true times
     new_summaries = [[c[i] for i in simulated_order] for c in eachrow(Matrix(simulated_data))]
+
+    all(@. length(historical_trace_times) == size(historical_trace_values,1)) || throw(DimensionMismatch("Times of traces do not match there lengths. Load manually."))
 
     good_trace_index = [i for i in eachindex(historical_trace_values) if !any(ismissing,historical_trace_values[i]) && size(historical_trace_values[i],1)>3]
     historical_traces = [StormTrace(identity.(historical_trace_values[i]),historical_trace_times[i]) for i in good_trace_index]
