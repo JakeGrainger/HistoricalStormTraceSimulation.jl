@@ -1,6 +1,6 @@
 module HistoricalStormTraceSimulation
 
-using ProgressMeter, Interpolations, DataFrames, Statistics, Optim, Reexport
+using ProgressMeter, Interpolations, DataFrames, Statistics, Optim, Reexport, RecipesBase
 @reexport using Distances
 
 include("rescalemethods.jl")

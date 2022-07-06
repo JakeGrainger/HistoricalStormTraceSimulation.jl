@@ -30,6 +30,10 @@ Compute the length of a StormTrace, which is the number of time points (not tota
 """
 Base.length(t::StormTrace) = size(t.value,1)
 
+@recipe function f(s::StormTrace)
+    s.time, s.value
+end
+
 """
     StormHistory(summaries,traces)
 
