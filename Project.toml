@@ -19,6 +19,7 @@ Distances = "0.10.7"
 Interpolations = "0.13.6"
 Optim = "1.7.0"
 ProgressMeter = "1.7.2"
+RecipesBase = "1"
 Reexport = "1.2.2"
 julia = "^1.6"
 
